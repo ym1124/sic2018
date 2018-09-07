@@ -1,21 +1,21 @@
 #include "all.h"
 
-void sean::doplaymode()//mainの*seから呼び出して
+void doplaymode(sean *se)//終了するときに各所でmainのポインタseを渡してplaymodeを書き換えてください。
 {
-	playmode = PLAY;
+	se->playmode = PLAY;
 }
 
-void sean::dotitlemode()
+void dotitlemode(sean *se)
 {
-	playmode = TITLE;
+	se->playmode = TITLE;
 }
 
-void sean::doclearmode()
+void doclearmode(sean *se)
 {
-	playmode = CLEAR;
+	se->playmode = CLEAR;
 }
 
-void sean::doovermode()
+void doovermode(sean *se)
 {
-	playmode = OVER;
+	se->playmode = OVER;
 }

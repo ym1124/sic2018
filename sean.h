@@ -10,8 +10,9 @@ public:
 	{
 		playmode = TITLE;
 	}
-	void doplaymode();//modeïœçX
-	void dotitlemode();
-	void doclearmode();
-	void doovermode();
 };
+
+void doplaymode(sean*);//modeïœçX
+void dotitlemode(sean*);
+void doclearmode(sean*);
+void doovermode(sean*);

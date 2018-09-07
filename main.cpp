@@ -17,8 +17,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	player *pl = new player();
 
-	player ppl;
-
 	block *bl = new block();
 
 	back *bk = new back();
@@ -269,7 +267,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 		//”wŒi•`‰æ
-		bk->All(ppl);
+		bk->All(*pl);
 
 
 

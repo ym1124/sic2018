@@ -13,10 +13,10 @@ bool check_hit_pos_y_rise(int pl_pos_y, int bl_pos_y, int blockNumber, int block
 		return true;
 
 	}
-
 	return false;
-
 }
+
+
 
 
 
