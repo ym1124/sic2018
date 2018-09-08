@@ -59,7 +59,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 
-	while (ProcessMessage() != -1&&se->playmode==TITLE)
+	while (ProcessMessage() != -1&&(se->playmode==TITLE||se->playmode==PLAY))
 
 	{
 
@@ -103,8 +103,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 		printfDx("%d", pl->acceleration);
+		
+		////////
+		//ƒV[ƒ“‘JˆÚtest
+		if (se->playmode==TITLE&&pl->pos_x>=800)
+		{
+			doplaymode(se);
+		}
 
-
+		if (se->playmode == PLAY)
+		{
+			pl->All();
+			bk->All(*se,*pl);
+		}
+		///////
 
 		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1)
 
@@ -267,7 +279,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 		//”wŒi•`‰æ
-		bk->All(*pl);
+		bk->All(*se,*pl);
 
 
 
