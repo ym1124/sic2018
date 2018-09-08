@@ -185,146 +185,148 @@ public:
 	void Move()
 
 	{
-
-
-
-		switch (directionMode % 2)
-
+		if (hp <= 0)
 		{
-
-		case 0:
-
-
-
-			if (CheckHitKey(KEY_INPUT_LEFT))
+		}
+		else
+		{
+			switch (directionMode % 2)
 
 			{
 
-				if (speed < PL_SPEED_MAX)
+			case 0:
+
+
+
+				if (CheckHitKey(KEY_INPUT_LEFT))
 
 				{
 
-					speed += PL_SPEED_INC;
+					if (speed < PL_SPEED_MAX)
+
+					{
+
+						speed += PL_SPEED_INC;
+
+					}
+
+
+
+					pos_x = pos_x - speed;
 
 				}
 
 
 
-				pos_x = pos_x - speed;
-
-			}
-
-
-
-			if (CheckHitKey(KEY_INPUT_RIGHT))
-
-			{
-
-				if (speed < PL_SPEED_MAX)
+				if (CheckHitKey(KEY_INPUT_RIGHT))
 
 				{
 
-					speed += PL_SPEED_INC;
+					if (speed < PL_SPEED_MAX)
+
+					{
+
+						speed += PL_SPEED_INC;
+
+					}
+
+
+
+					pos_x = pos_x + speed;
 
 				}
 
 
 
-				pos_x = pos_x + speed;
-
-			}
-
-
-
-			if (!CheckHitKey(KEY_INPUT_RIGHT) && !CheckHitKey(KEY_INPUT_LEFT))
-
-			{
-
-				speed = 0;
-
-			}
-
-
-
-
-
-			break;
-
-
-
-
-
-		case 1:
-
-
-
-			if (CheckHitKey(KEY_INPUT_UP))
-
-			{
-
-				if (speed < PL_SPEED_MAX)
+				if (!CheckHitKey(KEY_INPUT_RIGHT) && !CheckHitKey(KEY_INPUT_LEFT))
 
 				{
 
-					speed += PL_SPEED_INC;
+					speed = 0;
 
 				}
 
 
 
-				pos_y = pos_y - speed;
-
-			}
 
 
+				break;
 
-			if (CheckHitKey(KEY_INPUT_DOWN))
 
-			{
 
-				if (speed < PL_SPEED_MAX)
+
+
+			case 1:
+
+
+
+				if (CheckHitKey(KEY_INPUT_UP))
 
 				{
 
-					speed += PL_SPEED_INC;
+					if (speed < PL_SPEED_MAX)
+
+					{
+
+						speed += PL_SPEED_INC;
+
+					}
+
+
+
+					pos_y = pos_y - speed;
 
 				}
 
 
 
-				pos_y = pos_y + speed;
+				if (CheckHitKey(KEY_INPUT_DOWN))
+
+				{
+
+					if (speed < PL_SPEED_MAX)
+
+					{
+
+						speed += PL_SPEED_INC;
+
+					}
+
+
+
+					pos_y = pos_y + speed;
+
+				}
+
+
+
+				if (!CheckHitKey(KEY_INPUT_UP) && !CheckHitKey(KEY_INPUT_DOWN))
+
+				{
+
+					speed = 0;
+
+				}
+
+
+
+
+
+				break;
+
+
+
+
+
+			default:
+
+				break;
 
 			}
 
 
-
-			if (!CheckHitKey(KEY_INPUT_UP) && !CheckHitKey(KEY_INPUT_DOWN))
-
-			{
-
-				speed = 0;
-
-			}
-
-
-
-
-
-			break;
-
-
-
-
-
-		default:
-
-			break;
 
 		}
-
-
-
-
 
 	}
 
@@ -429,7 +431,7 @@ public:
 			//Ž€–S‚Þ[‚Ô
 
 			DrawRectGraph(pos_x, pos_y, 0, 0, PL_WIDTH, PL_HEIGHT, player_gh_death, true, false);
-
+			//Œã‚ÅƒAƒjƒ“ü‚ê‚é
 		}
 
 	}

@@ -42,7 +42,7 @@
 #define BACK_MARGIN 50
 #define BACKSIDE_MARGIN 250
 
-#include "sean.h"
+#include "scene.h"
 
 #include"player.h"
 

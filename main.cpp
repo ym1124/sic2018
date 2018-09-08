@@ -21,7 +21,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	back *bk = new back();
 
-	sean *se = new sean();
+	scene *se = new scene();
 
 
 	bool spaceFlg = false;
@@ -102,8 +102,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 
-		printfDx("%d", pl->acceleration);
-		
+		/*printfDx("%d", pl->acceleration);
+		*/
 		////////
 		//ƒV[ƒ“‘JˆÚtest
 		if (CheckHitKey(KEY_INPUT_0))
@@ -114,6 +114,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (CheckHitKey(KEY_INPUT_1))
 		{
 			pl->directionMode = 1;
+			bk->fx = 0;
 			bk->x = 0;
 		}
 		if (CheckHitKey(KEY_INPUT_2))
@@ -124,6 +125,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (CheckHitKey(KEY_INPUT_3))
 		{
 			pl->directionMode = 3;
+			bk->fx = 0;
 			bk->x = 0;
 		}
 		if (se->playmode==TITLE&&pl->pos_x>=800)
@@ -431,7 +433,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 		pl->All();
-
+		bk->Drawfront(*se, *pl);
 
 
 
