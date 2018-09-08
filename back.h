@@ -5,6 +5,7 @@
 class back
 {
 public:
+	int x;
 	int y;
 	int scrollspeedsetter;
 	int playback_gh,titleback_gh;
@@ -15,7 +16,7 @@ public:
 		titleback_gh = LoadGraph("Data/Image/SIC_1_back_test1.png");
 		playback_gh = LoadGraph("Data/Image/BG1.png");
 	}
-	void Draw(sean);
+	void Draw(sean,player);
 	void Move(player);
 	void All(sean,player);
 };
