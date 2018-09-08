@@ -32,7 +32,7 @@ void back::Drawback(scene se,player pl)
 				playback_gh, false);
 			if (CheckHitKey(KEY_INPUT_4))doorFlg = true;
 			Drawdoor();
-			y -= /*SCROLL_SPEED + scrollspeedsetter;*/1;
+			y -= /*SCROLL_SPEED + scrollspeedsetter;*/1;//テスト用変更
 			break;
 		case 2://上から下
 			if (y > WINDOW_Y)y = 0;
