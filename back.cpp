@@ -41,42 +41,42 @@ void back::Draw(sean se,player pl)
 				0 + BACKSIDE_MARGIN, WINDOW_Y + y,//左下
 				playback_gh, false);
 			DrawModiGraph(
-				0 + BACKSIDE_MARGIN, WINDOW_Y + y,
-				WINDOW_X - BACKSIDE_MARGIN, WINDOW_Y + y,
-				WINDOW_X - BACKSIDE_MARGIN, WINDOW_Y * 2 + y,
-				0 + BACKSIDE_MARGIN, WINDOW_Y * 2 + y,
+				0 + BACKSIDE_MARGIN, -WINDOW_Y + y,
+				WINDOW_X - BACKSIDE_MARGIN, -WINDOW_Y + y,
+				WINDOW_X - BACKSIDE_MARGIN, y,
+				0 + BACKSIDE_MARGIN, y,
 				playback_gh, false);
 			y += SCROLL_SPEED + scrollspeedsetter;
 			break;
 		case 1:
 			if (x > WINDOW_X)x = 0;
 			DrawModiGraph(
-				x, BACKSIDE_MARGIN,//左上
-				WINDOW_X +x, BACKSIDE_MARGIN,//右上
-				WINDOW_X +x, WINDOW_Y-BACKSIDE_MARGIN,//右下
-				x, WINDOW_Y-BACKSIDE_MARGIN,//左下
+				x, BACK_MARGIN,//左上
+				WINDOW_X +x, BACK_MARGIN,//右上
+				WINDOW_X +x, WINDOW_Y-BACK_MARGIN,//右下
+				x, WINDOW_Y-BACK_MARGIN,//左下
 				playback_gh, false);
 			DrawModiGraph(
-				-WINDOW_X + x, BACKSIDE_MARGIN,
-				x, BACKSIDE_MARGIN,
-				x, WINDOW_Y - BACKSIDE_MARGIN,
-				-WINDOW_X+x, WINDOW_Y - BACKSIDE_MARGIN,
+				-WINDOW_X + x, BACK_MARGIN,
+				x, BACK_MARGIN,
+				x, WINDOW_Y - BACK_MARGIN,
+				-WINDOW_X+x, WINDOW_Y - BACK_MARGIN,
 				playback_gh, false);
 			x += SCROLL_SPEED + scrollspeedsetter;
 			break;
 		case 3:
 			if (x < -WINDOW_X)x = 0;
 			DrawModiGraph(
-				x, BACKSIDE_MARGIN,//左上
-				WINDOW_X + x, BACKSIDE_MARGIN,//右上
-				WINDOW_X + x, WINDOW_Y - BACKSIDE_MARGIN,//右下
-				x, WINDOW_Y - BACKSIDE_MARGIN,//左下
+				x, BACK_MARGIN,//左上
+				WINDOW_X + x, BACK_MARGIN,//右上
+				WINDOW_X + x, WINDOW_Y - BACK_MARGIN,//右下
+				x, WINDOW_Y - BACK_MARGIN,//左下
 				playback_gh, false);
 			DrawModiGraph(
-				WINDOW_X + x, BACKSIDE_MARGIN,
-				WINDOW_X*2+x, BACKSIDE_MARGIN,
-				WINDOW_X*2+x, WINDOW_Y - BACKSIDE_MARGIN,
-				WINDOW_X + x, WINDOW_Y - BACKSIDE_MARGIN,
+				WINDOW_X + x, BACK_MARGIN,
+				WINDOW_X*2+x, BACK_MARGIN,
+				WINDOW_X*2+x, WINDOW_Y - BACK_MARGIN,
+				WINDOW_X + x, WINDOW_Y - BACK_MARGIN,
 				playback_gh, false);
 			x -= SCROLL_SPEED + scrollspeedsetter;
 			break;

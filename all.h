@@ -39,7 +39,7 @@
 #define EXIST_MAX_FALL_RANGE_X 960
 
 
-
+#define BACK_MARGIN 50
 #define BACKSIDE_MARGIN 250
 
 #include "sean.h"

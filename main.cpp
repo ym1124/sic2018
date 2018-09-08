@@ -106,6 +106,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		
 		////////
 		//ƒV[ƒ“‘JˆÚtest
+		if (CheckHitKey(KEY_INPUT_0))
+		{
+			pl->directionMode = 0;
+			bk->y = 0;
+		}
+		if (CheckHitKey(KEY_INPUT_1))
+		{
+			pl->directionMode = 1;
+			bk->x = 0;
+		}
+		if (CheckHitKey(KEY_INPUT_2))
+		{
+			pl->directionMode = 2;
+			bk->y = 0;
+		}
+		if (CheckHitKey(KEY_INPUT_3))
+		{
+			pl->directionMode = 3;
+			bk->x = 0;
+		}
 		if (se->playmode==TITLE&&pl->pos_x>=800)
 		{
 			doplaymode(se);
