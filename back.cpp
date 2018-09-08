@@ -1,6 +1,6 @@
 #include "ALL.h"
 
-void back::Draw(scene se,player pl)
+void back::Drawback(scene se,player pl)
 {
 	if (se.playmode == TITLE)//É^ÉCÉgÉãâÊñ îwåi
 	{
@@ -30,7 +30,9 @@ void back::Draw(scene se,player pl)
 				WINDOW_X - BACKSIDE_MARGIN, WINDOW_Y * 2 + y,
 				0 + BACKSIDE_MARGIN, WINDOW_Y * 2 + y,
 				playback_gh, false);
-			y -= SCROLL_SPEED + scrollspeedsetter;
+			if (CheckHitKey(KEY_INPUT_4))doorFlg = true;
+			Drawdoor();
+			y -= /*SCROLL_SPEED + scrollspeedsetter;*/1;
 			break;
 		case 2://è„Ç©ÇÁâ∫
 			if (y > WINDOW_Y)y = 0;
@@ -46,6 +48,7 @@ void back::Draw(scene se,player pl)
 				WINDOW_X - BACKSIDE_MARGIN, y,
 				0 + BACKSIDE_MARGIN, y,
 				playback_gh, false);
+			Drawdoor();
 			y += SCROLL_SPEED + scrollspeedsetter;
 			break;
 		case 1://ç∂Ç©ÇÁâE
@@ -84,7 +87,7 @@ void back::Draw(scene se,player pl)
 	}
 }
 
-void back::Drawfront(scene se, player pl)
+void back::Drawbackfront(scene se, player pl)
 {
 	if (se.playmode == PLAY)//ÉvÉåÉCâÊñ îwåi
 	{
@@ -126,6 +129,24 @@ void back::Drawfront(scene se, player pl)
 	}
 }
 
+void back::Drawdoor()
+{
+	switch (doorFlg)
+	{
+	case false:
+		anim_x = 0;
+		DrawRectExtendGraph(BACKSIDE_MARGIN, y + DOORPOS_Y, BACKSIDE_MARGIN + 150, DOORPOS_Y + y + 250, anim_x * 32, 96, 32, 96, door_gh, true);
+		DrawRectExtendGraph(BACKSIDE_MARGIN, y + DOORPOS_Y + WINDOW_Y, BACKSIDE_MARGIN + 150, DOORPOS_Y + y + 250 + WINDOW_Y, anim_x * 32, 96, 32, 96, door_gh, true);
+		break;
+	case true:
+		anim_x = (animCnt / 30) % 5;
+		animCnt++;
+		DrawRectExtendGraph(BACKSIDE_MARGIN, y + DOORPOS_Y, BACKSIDE_MARGIN + 150, DOORPOS_Y + y + 250, anim_x * 32, 96, 32, 96, door_gh, true);
+		DrawRectExtendGraph(BACKSIDE_MARGIN, y + DOORPOS_Y + WINDOW_Y, BACKSIDE_MARGIN + 150, DOORPOS_Y + y + 250 + WINDOW_Y, anim_x * 32, 96, 32, 96, door_gh, true);
+		break;
+	}
+}
+
 void back::Move(player pl)
 {
 	switch (pl.acceleration)
@@ -147,6 +168,6 @@ void back::Move(player pl)
 
 void back::All(scene se,player pl)
 {
-	Draw(se,pl);
+	Drawback(se,pl);
 	Move(pl);
 }

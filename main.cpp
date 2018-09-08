@@ -433,7 +433,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 		pl->All();
-		bk->Drawfront(*se, *pl);
+		bk->Drawbackfront(*se, *pl);
 
 
 
