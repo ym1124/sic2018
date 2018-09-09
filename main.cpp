@@ -106,6 +106,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		*/
 		////////
 		//ƒV[ƒ“‘JˆÚtest
+		if (CheckHitKey(KEY_INPUT_7))
+		{
+			pl->hp = 0;
+		}
 		if (CheckHitKey(KEY_INPUT_0))
 		{
 			pl->directionMode = 0;

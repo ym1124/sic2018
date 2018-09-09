@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <time.h>
+
 #define PL_WIDTH 28
 
 #define PL_HEIGHT 28
@@ -41,6 +44,9 @@
 
 
 #define PL_MAX_ACCELERATION 6
+
+#define EXPLOSIVE_POWER 15
+#define PL_PARTS_START 63
 
 
 
@@ -99,8 +105,17 @@ public:
 
 
 	int player_gh;
-
-	int player_gh_death;
+	int exp_gh;
+	////死亡時関連
+	int player_gh_parts[18*6];//63から71まで
+	int expCnt;
+	int parts_x[9] = { 0 }; 
+	int parts_y[9] = { 0 };
+	bool expFlg[9] = { 0 };
+	int y_temp[9] = { 0 }; 
+	int y_prev[9] = { 0 };
+	int exp_x;
+	int rngvalue[9];
 
 
 
@@ -152,15 +167,16 @@ public:
 
 		invincibleFlg = false;
 
-
-
-
+		srand(unsigned int(time(NULL)));
+		for (int i = 0; i < 9; i++)
+		{
+			rngvalue[i] = rand() % 4*3;
+		}
 
 
 
 		player_gh = LoadGraph("Data/Image/player1.png");
-
-		player_gh_death = LoadGraph("Data/Image/Pl_ps.png");
+		exp_gh = LoadGraph("Data/Image/effect1.png");
 
 
 
@@ -175,6 +191,9 @@ public:
 		acceleCnt = 0;
 
 		animCnt = 0;
+
+		expCnt = 0;
+		exp_x = 0;
 
 
 
@@ -427,11 +446,36 @@ public:
 		else
 
 		{
-
 			//死亡むーぶ
-
-			DrawRectGraph(pos_x, pos_y, 0, 0, PL_WIDTH, PL_HEIGHT, player_gh_death, true, false);
-			//後でアニメ入れる
+			LoadDivGraph("Data/Image/player1.png", 18 * 6, 18, 6, PL_WIDTH, PL_HEIGHT, player_gh_parts);
+			DrawRectGraph(pos_x-20, pos_y-25, exp_x * 64, 0, 64, 64, exp_gh, true);//pos_x,yで何故か位置が微妙にずれるため数字ぶち込んで調整してる
+			expCnt++;
+			exp_x = expCnt / 3;
+			for (int i = 0; i < 9; i++)
+			{
+				switch (i % 2)
+				{
+				case 1:
+					parts_x[i] += expCnt / 20;
+					break;
+				case 0:
+					parts_x[i] -= expCnt / 20;
+					break;
+				}
+				if (expFlg[i] == false)
+				{
+					y_prev[i] = parts_y[i];
+					parts_y[i] = parts_y[i] - (EXPLOSIVE_POWER + rngvalue[i]);
+					expFlg[i] = true;
+				}
+				else
+				{
+					y_temp[i] = parts_y[i];
+					parts_y[i] += (parts_y[i] - y_prev[i]) + 1;
+					y_prev[i] = y_temp[i];
+				}
+				DrawGraph(pos_x + parts_x[i], pos_y + parts_y[i], player_gh_parts[PL_PARTS_START + i], true);
+			}
 		}
 
 	}

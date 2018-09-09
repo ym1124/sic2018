@@ -16,7 +16,7 @@ public:
 	int anim_x;
 	int animCnt;
 
-	bool doorFlg;
+	bool doorFlg;//ドア開けるフラグ
 
 	back()
 	{
