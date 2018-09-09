@@ -110,10 +110,10 @@ public:
 	int player_gh_parts[18*6];//63‚©‚ç71‚Ü‚Å
 	int expCnt;
 	int parts_x[9] = { 0 }; 
-	int parts_y[9] = { 0 };
+	double parts_y[9] = { 0 };
 	bool expFlg[9] = { 0 };
-	int y_temp[9] = { 0 }; 
-	int y_prev[9] = { 0 };
+	double y_temp[9] = { 0 }; 
+	double y_prev[9] = { 0 };
 	int exp_x;
 	int rngvalue[9];
 
@@ -465,13 +465,13 @@ public:
 				if (expFlg[i] == false)
 				{
 					y_prev[i] = parts_y[i];
-					parts_y[i] = parts_y[i] - (EXPLOSIVE_POWER + rngvalue[i]);
+					parts_y[i] = parts_y[i] - (rngvalue[i]);//EXPLOSIVE_POWER
 					expFlg[i] = true;
 				}
 				else
 				{
 					y_temp[i] = parts_y[i];
-					parts_y[i] += (parts_y[i] - y_prev[i]) + 1;
+					parts_y[i] += (parts_y[i] - y_prev[i]) + 0.35;
 					y_prev[i] = y_temp[i];
 				}
 				DrawGraph(pos_x + parts_x[i], pos_y + parts_y[i], player_gh_parts[PL_PARTS_START + i], true);
