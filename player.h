@@ -46,6 +46,7 @@
 #define PL_MAX_ACCELERATION 6
 
 #define EXPLOSIVE_POWER 15
+#define EXPLOSION_MARGIN 17
 #define PL_PARTS_START 63
 
 
@@ -448,7 +449,7 @@ public:
 		{
 			//éÄñSÇﬁÅ[Ç‘
 			LoadDivGraph("Data/Image/player1.png", 18 * 6, 18, 6, PL_WIDTH, PL_HEIGHT, player_gh_parts);
-			DrawRectGraph(pos_x-20, pos_y-25, exp_x * 64, 0, 64, 64, exp_gh, true);//pos_x,yÇ≈âΩåÃÇ©à íuÇ™î˜ñ≠Ç…Ç∏ÇÍÇÈÇΩÇﬂêîéöÇ‘ÇøçûÇÒÇ≈í≤êÆÇµÇƒÇÈ
+			DrawRectGraph(pos_x-EXPLOSION_MARGIN, pos_y-EXPLOSION_MARGIN, exp_x * 64, 0, 64, 64, exp_gh, true);
 			expCnt++;
 			exp_x = expCnt / 3;
 			for (int i = 0; i < 9; i++)
