@@ -475,7 +475,7 @@ public:
 					parts_y[i] += (parts_y[i] - y_prev[i]) + 0.35;
 					y_prev[i] = y_temp[i];
 				}
-				DrawGraph(pos_x + parts_x[i], pos_y + parts_y[i], player_gh_parts[PL_PARTS_START + i], true);
+				DrawRotaGraph(pos_x + parts_x[i], pos_y + parts_y[i],1,expCnt/3, player_gh_parts[PL_PARTS_START + i], true);
 			}
 		}
 
