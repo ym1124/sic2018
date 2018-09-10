@@ -44,6 +44,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	scene *se = new scene();
 
+	ui *pui = new ui();
+
 
 
 	bool spaceFlg = false;
@@ -253,6 +255,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			pl->All();
 
 			bk->All(*se, *pl);
+
+			pui->All();
 
 		}
 

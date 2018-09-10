@@ -54,7 +54,7 @@
 
 #define BACK_MARGIN 50
 
-#define BACKSIDE_MARGIN 100
+#define BACKSIDE_MARGIN 112
 
 
 
@@ -74,3 +74,4 @@
 
 #include"obstacle.h"
 
+#include "ui.h"

@@ -311,24 +311,24 @@ public:
 						switch (anim_x)
 						{
 						case 0:
-							DrawRectGraph(pos_x, (pos_y + i*height), anim_x * 32, 32, 32, 32, blockef_gh, true, false);
+							DrawRectGraph(pos_x, (pos_y - i*height), anim_x * 32, 32, 32, 32, blockef_gh, true, false);
 							break;
 						case 1:
 							for (int i = anim_x; i >= 0; i--)
 							{
-								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+								DrawRectGraph(pos_x, (pos_y - i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
 							}
 							break;
 						case 2:
 							for (int i = anim_x; i >= 0; i--)
 							{
-								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+								DrawRectGraph(pos_x, (pos_y - i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
 							}
 							break;
 						case 3:
 							for (int i = anim_x; i >= 0; i--)
 							{
-								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+								DrawRectGraph(pos_x, (pos_y - i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
 							}
 							break;//breakñ≥ÇµèÊéZÇ≈ï\é¶?
 						}
