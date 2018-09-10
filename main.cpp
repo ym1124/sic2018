@@ -236,7 +236,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 
-		if (se->playmode == TITLE&&pl->pos_x >= 800)
+		if (se->playmode == TITLE&&pl->pos_x >= 400)
 
 		{
 

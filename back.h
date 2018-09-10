@@ -2,11 +2,26 @@
 
 #include "all.h"
 
-#define SCROLL_SPEED 2
+#define SCROLL_SPEED 1
 
-#define DOORPOS_Y 445
+#define DOORPOS_Y 176
 
+#define DOOR_LEFT_WIDTH 32
 
+#define DOOR_RIGHT_WIDTH 23
+
+#define DOOR_HEIGHT 83
+
+#define EDGE_WIDTH 16
+
+#define WINDOW_Y_RECT WINDOW_Y/288//288背景縦幅
+
+#define WINDOW_X_RECT (WINDOW_X-BACKSIDE_MARGIN*2)/224
+
+//ドアの画像ピクセル96~179
+
+//フレームx16 左ドアx26　右ドア23
+//x185y176x幅160
 
 class back
 
@@ -18,9 +33,9 @@ public:
 
 	double fx, fy;
 
-	int scrollspeedsetter;
+	double scrollspeedsetter;
 
-	int playback_gh, titleback_gh;
+	int playback_gh, titleback_gh,playbackedge_gh;
 
 	int playbackside_gh[2];//[0]が遠景[1]が近景
 
@@ -62,7 +77,9 @@ public:
 
 		LoadDivGraph("Data/Image/BG3.png", 2, 2, 1, 112, 96, playbackside_gh);
 
-		playback_gh = LoadGraph("Data/Image/BG1.png");
+		playback_gh = LoadGraph("Data/Image/BG1_A.png");
+
+		playbackedge_gh = LoadGraph("Data/Image/BG1_B.png");
 
 		door_gh = LoadGraph("Data/Image/door.png");
 
@@ -72,7 +89,7 @@ public:
 
 	void Drawbackfront(scene, player);
 
-	void Drawdoor();
+	void Drawdoor(player);
 
 	void Move(player);
 

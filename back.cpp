@@ -36,71 +36,33 @@ void back::Drawback(scene se, player pl)
 
 		case 0://下から上
 
-			if (y < -WINDOW_Y)y = 0;
+			if (y < -360)y = 0;
 
-			DrawModiGraph(
+			DrawGraph(BACKSIDE_MARGIN, y,playback_gh, true);
 
-				0 + BACKSIDE_MARGIN, y,//左上
-
-				WINDOW_X - BACKSIDE_MARGIN, y,//右上
-
-				WINDOW_X - BACKSIDE_MARGIN, WINDOW_Y + y,//右下
-
-				0 + BACKSIDE_MARGIN, WINDOW_Y + y,//左下
-
-				playback_gh, false);
-
-			DrawModiGraph(
-
-				0 + BACKSIDE_MARGIN, WINDOW_Y + y,
-
-				WINDOW_X - BACKSIDE_MARGIN, WINDOW_Y + y,
-
-				WINDOW_X - BACKSIDE_MARGIN, WINDOW_Y * 2 + y,
-
-				0 + BACKSIDE_MARGIN, WINDOW_Y * 2 + y,
-
-				playback_gh, false);
+			DrawGraph(BACKSIDE_MARGIN, WINDOW_Y + y,playback_gh, true);
 
 			if (CheckHitKey(KEY_INPUT_4))doorFlg = true;
 
-			Drawdoor();
+			Drawdoor(pl);
 
-			y -= /*SCROLL_SPEED + scrollspeedsetter;*/5;//テスト用変更
+			y -= SCROLL_SPEED /*+ scrollspeedsetter*/;//テスト用変更
 
 			break;
 
 		case 2://上から下
 
-			if (y > WINDOW_Y)y = 0;
+			if (y > 360)y = 0;
 
-			DrawModiGraph(
+			DrawGraph(BACKSIDE_MARGIN, y,playback_gh, true);
 
-				0 + BACKSIDE_MARGIN, y,//左上
+			DrawGraph(BACKSIDE_MARGIN, -WINDOW_Y + y,playback_gh, true);
 
-				WINDOW_X - BACKSIDE_MARGIN, y,//右上
+			if (CheckHitKey(KEY_INPUT_4))doorFlg = true;
 
-				WINDOW_X - BACKSIDE_MARGIN, WINDOW_Y + y,//右下
+			Drawdoor(pl);
 
-				0 + BACKSIDE_MARGIN, WINDOW_Y + y,//左下
-
-				playback_gh, false);
-
-			DrawModiGraph(
-
-				0 + BACKSIDE_MARGIN, -WINDOW_Y + y,
-
-				WINDOW_X - BACKSIDE_MARGIN, -WINDOW_Y + y,
-
-				WINDOW_X - BACKSIDE_MARGIN, y,
-
-				0 + BACKSIDE_MARGIN, y,
-
-				playback_gh, false);
-
-			Drawdoor();
-
-			y += SCROLL_SPEED + scrollspeedsetter;
+			y += SCROLL_SPEED /*+ scrollspeedsetter*/;
 
 			break;
 
@@ -187,6 +149,33 @@ void back::Drawbackfront(scene se, player pl)
 		switch (pl.directionMode)
 
 		{
+		case 0:
+			if (y < -WINDOW_Y)y = 0;
+
+			DrawGraph(BACKSIDE_MARGIN, y,playbackedge_gh, true);
+
+			DrawGraph(BACKSIDE_MARGIN, WINDOW_Y + y,playbackedge_gh, true);
+
+			if (CheckHitKey(KEY_INPUT_4))doorFlg = true;//テスト
+
+			Drawdoor(pl);
+
+			y -= SCROLL_SPEED + scrollspeedsetter;//テスト用変更
+
+			break;
+
+		case 2:
+			if (y > WINDOW_Y)y = 0;
+
+			DrawGraph(BACKSIDE_MARGIN, y,playbackedge_gh, true);
+
+			DrawGraph(BACKSIDE_MARGIN, -WINDOW_Y + y,playbackedge_gh, true);
+
+			Drawdoor(pl);
+
+			y += SCROLL_SPEED + scrollspeedsetter;
+
+			break;
 
 		case 1://左から右
 
@@ -260,7 +249,7 @@ void back::Drawbackfront(scene se, player pl)
 
 
 
-void back::Drawdoor()
+void back::Drawdoor(player pl)
 
 {
 
@@ -271,25 +260,46 @@ void back::Drawdoor()
 	case false:
 
 		anim_x = 0;
-
-		DrawRectExtendGraph(BACKSIDE_MARGIN, y + DOORPOS_Y, BACKSIDE_MARGIN + 150, DOORPOS_Y + y + 250, anim_x * 32, 96, 32, 96, door_gh, true);
-
-		DrawRectExtendGraph(BACKSIDE_MARGIN, y + DOORPOS_Y + WINDOW_Y, BACKSIDE_MARGIN + 150, DOORPOS_Y + y + 250 + WINDOW_Y, anim_x * 32, 96, 32, 96, door_gh, true);
-
+		//case0の分
+		DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH, DOORPOS_Y + y, anim_x * 32, 96, 32, 96, door_gh, true);
+		DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH, DOORPOS_Y + WINDOW_Y + y, anim_x * 32, 96, 32, 96, door_gh, true);
+		DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH + 169, DOORPOS_Y + y, anim_x * 32, 0, 32, 96, door_gh, true);
+		DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH + 169, DOORPOS_Y + WINDOW_Y + y, anim_x * 32, 0, 32, 96, door_gh, true);
+		//case2の分
+		DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH, DOORPOS_Y + y, anim_x * 32, 96, 32, 96, door_gh, true);
+		DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH, DOORPOS_Y - WINDOW_Y + y, anim_x * 32, 96, 32, 96, door_gh, true);
+		DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH + 169, DOORPOS_Y + y, anim_x * 32, 0, 32, 96, door_gh, true);
+		DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH + 169, DOORPOS_Y - WINDOW_Y + y, anim_x * 32, 0, 32, 96, door_gh, true);
 		break;
 
 	case true:
 
 		anim_x = (animCnt / 30) % 5;
-
+		
 		animCnt++;
+		switch (pl.directionMode)
+		{
+		case 0:
+			//左の扉が開く描画
+			DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH, DOORPOS_Y + y, anim_x * 32, 96, 32, 96, door_gh, true);
 
-		DrawRectExtendGraph(BACKSIDE_MARGIN, y + DOORPOS_Y, BACKSIDE_MARGIN + 150, DOORPOS_Y + y + 250, anim_x * 32, 96, 32, 96, door_gh, true);
+			DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH, DOORPOS_Y + WINDOW_Y + y, anim_x * 32, 96, 32, 96, door_gh, true);
+			//右の扉が開く描画
+			DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH + 169, DOORPOS_Y + y, anim_x * 32, 0, 32, 96, door_gh, true);
 
-		DrawRectExtendGraph(BACKSIDE_MARGIN, y + DOORPOS_Y + WINDOW_Y, BACKSIDE_MARGIN + 150, DOORPOS_Y + y + 250 + WINDOW_Y, anim_x * 32, 96, 32, 96, door_gh, true);
+			DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH + 169, DOORPOS_Y + WINDOW_Y + y, anim_x * 32, 0, 32, 96, door_gh, true);
+			break;
+		case 2:
+			//左の扉が開く描画
+			DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH, DOORPOS_Y + y, anim_x * 32, 96, 32, 96, door_gh, true);
 
-		break;
+			DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH, DOORPOS_Y - WINDOW_Y + y, anim_x * 32, 96, 32, 96, door_gh, true);
+			//右の扉が開く描画
+			DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH + 169, DOORPOS_Y + y, anim_x * 32, 0, 32, 96, door_gh, true);
 
+			DrawRectGraph(BACKSIDE_MARGIN + EDGE_WIDTH + 169, DOORPOS_Y - WINDOW_Y + y, anim_x * 32, 0, 32, 96, door_gh, true);
+			break;
+		}
 	}
 
 }
@@ -312,19 +322,19 @@ void back::Move(player pl)
 
 	case 1:
 
-		scrollspeedsetter = 1;
+		scrollspeedsetter = 0.5;
 
 		break;
 
 	case 2:
 
-		scrollspeedsetter = 2;
+		scrollspeedsetter = 1;
 
 		break;
 
 	case 3:
 
-		scrollspeedsetter = 3;
+		scrollspeedsetter = 1.5;
 
 		break;
 

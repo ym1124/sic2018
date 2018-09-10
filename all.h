@@ -14,9 +14,9 @@
 
 
 
-#define WINDOW_X 384
+#define WINDOW_X 512
 
-#define WINDOW_Y 216
+#define WINDOW_Y 288
 
 #define MAX_WINDOW_EXTEND_RATE 5
 
@@ -54,7 +54,7 @@
 
 #define BACK_MARGIN 50
 
-#define BACKSIDE_MARGIN 250
+#define BACKSIDE_MARGIN 100
 
 
 
