@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <time.h>
-
 #define PL_WIDTH 28
 
 #define PL_HEIGHT 28
@@ -8,6 +5,12 @@
 #define PL_SPEED_MAX 9
 
 #define PL_SPEED_INC 0.2
+
+
+
+#define BLOCK_RISE_MODE 0
+
+#define BLOCK_FALL_MODE 2
 
 
 
@@ -45,9 +48,19 @@
 
 #define PL_MAX_ACCELERATION 6
 
+
+
+#define PL_HITSTOP_VAL 6
+
+
+
 #define EXPLOSIVE_POWER 15
+
 #define EXPLOSION_MARGIN 17
+
 #define PL_PARTS_START 63
+
+
 
 
 
@@ -55,7 +68,15 @@ bool check_hit_pos_y_rise(int, int, int, int);
 
 bool check_hit_pos_y_fall(int, int, int, int);
 
+bool check_hit_pos_x_goright(int, int);
+
+bool check_hit_pos_x_goleft(int, int);
+
 bool checkHitBlock(int, int);
+
+bool checkHitObsacle(int, int);
+
+int checkHitStop(int, int);
 
 int direction_pl_pos_x(int);
 
@@ -78,6 +99,10 @@ public:
 	int fallVelocity;
 
 	int acceleration;
+
+
+
+	int accelerationTmp;
 
 
 
@@ -106,16 +131,35 @@ public:
 
 
 	int player_gh;
+
+	int player_gh_death;
+
+
+
+	//Ž€–SŽžŠÖ˜A
+
+
+
 	int exp_gh;
-	////Ž€–SŽžŠÖ˜A
-	int player_gh_parts[18*6];//63‚©‚ç71‚Ü‚Å
+
+
+
+	int player_gh_parts[18 * 6];
+
 	int expCnt;
-	int parts_x[9] = { 0 }; 
+
+	int parts_x[9] = { 0 };
+
 	double parts_y[9] = { 0 };
+
 	bool expFlg[9] = { 0 };
-	double y_temp[9] = { 0 }; 
+
+	double y_temp[9] = { 0 };
+
 	double y_prev[9] = { 0 };
+
 	int exp_x;
+
 	int rngvalue[9];
 
 
@@ -126,9 +170,13 @@ public:
 
 	int animCnt;
 
+	int hitstopCnt;
+
 
 
 	bool plLiveFlg;
+
+	bool hitstopFlg;
 
 
 
@@ -156,6 +204,10 @@ public:
 
 
 
+		accelerationTmp = 1;
+
+
+
 		hp = 3;
 
 
@@ -168,15 +220,30 @@ public:
 
 		invincibleFlg = false;
 
-		srand(unsigned int(time(NULL)));
+
+
+		hitstopFlg = false;
+
+
+
 		for (int i = 0; i < 9; i++)
+
 		{
-			rngvalue[i] = rand() % 4*3;
+
+			rngvalue[i] = rand() % 4 * 3;
+
 		}
 
 
 
+
+
+
+
 		player_gh = LoadGraph("Data/Image/player1.png");
+
+		player_gh_death = LoadGraph("Data/Image/Pl_ps.png");
+
 		exp_gh = LoadGraph("Data/Image/effect1.png");
 
 
@@ -193,7 +260,12 @@ public:
 
 		animCnt = 0;
 
+		hitstopCnt = 0;
+
+
+
 		expCnt = 0;
+
 		exp_x = 0;
 
 
@@ -205,148 +277,150 @@ public:
 	void Move()
 
 	{
-		if (hp <= 0)
+
+
+
+		switch (directionMode)
+
 		{
-		}
-		else
-		{
-			switch (directionMode % 2)
+
+		case BLOCK_RISE_MODE:
+
+		case BLOCK_FALL_MODE:
+
+
+
+			if (CheckHitKey(KEY_INPUT_LEFT))
 
 			{
 
-			case 0:
-
-
-
-				if (CheckHitKey(KEY_INPUT_LEFT))
+				if (speed < PL_SPEED_MAX)
 
 				{
 
-					if (speed < PL_SPEED_MAX)
-
-					{
-
-						speed += PL_SPEED_INC;
-
-					}
-
-
-
-					pos_x = pos_x - speed;
+					speed += PL_SPEED_INC;
 
 				}
 
 
 
-				if (CheckHitKey(KEY_INPUT_RIGHT))
-
-				{
-
-					if (speed < PL_SPEED_MAX)
-
-					{
-
-						speed += PL_SPEED_INC;
-
-					}
-
-
-
-					pos_x = pos_x + speed;
-
-				}
-
-
-
-				if (!CheckHitKey(KEY_INPUT_RIGHT) && !CheckHitKey(KEY_INPUT_LEFT))
-
-				{
-
-					speed = 0;
-
-				}
-
-
-
-
-
-				break;
-
-
-
-
-
-			case 1:
-
-
-
-				if (CheckHitKey(KEY_INPUT_UP))
-
-				{
-
-					if (speed < PL_SPEED_MAX)
-
-					{
-
-						speed += PL_SPEED_INC;
-
-					}
-
-
-
-					pos_y = pos_y - speed;
-
-				}
-
-
-
-				if (CheckHitKey(KEY_INPUT_DOWN))
-
-				{
-
-					if (speed < PL_SPEED_MAX)
-
-					{
-
-						speed += PL_SPEED_INC;
-
-					}
-
-
-
-					pos_y = pos_y + speed;
-
-				}
-
-
-
-				if (!CheckHitKey(KEY_INPUT_UP) && !CheckHitKey(KEY_INPUT_DOWN))
-
-				{
-
-					speed = 0;
-
-				}
-
-
-
-
-
-				break;
-
-
-
-
-
-			default:
-
-				break;
+				pos_x = pos_x - speed;
 
 			}
 
 
 
+			if (CheckHitKey(KEY_INPUT_RIGHT))
+
+			{
+
+				if (speed < PL_SPEED_MAX)
+
+				{
+
+					speed += PL_SPEED_INC;
+
+				}
+
+
+
+				pos_x = pos_x + speed;
+
+			}
+
+
+
+			if (!CheckHitKey(KEY_INPUT_RIGHT) && !CheckHitKey(KEY_INPUT_LEFT))
+
+			{
+
+				speed = 0;
+
+			}
+
+
+
+
+
+			break;
+
+
+
+
+
+		case PL_RIGHTSIDE_MODE:
+
+		case PL_LEFTSIDE_MODE:
+
+
+
+			if (CheckHitKey(KEY_INPUT_UP))
+
+			{
+
+				if (speed < PL_SPEED_MAX)
+
+				{
+
+					speed += PL_SPEED_INC;
+
+				}
+
+
+
+				pos_y = pos_y - speed;
+
+			}
+
+
+
+			if (CheckHitKey(KEY_INPUT_DOWN))
+
+			{
+
+				if (speed < PL_SPEED_MAX)
+
+				{
+
+					speed += PL_SPEED_INC;
+
+				}
+
+
+
+				pos_y = pos_y + speed;
+
+			}
+
+
+
+			if (!CheckHitKey(KEY_INPUT_UP) && !CheckHitKey(KEY_INPUT_DOWN))
+
+			{
+
+				speed = 0;
+
+			}
+
+
+
+
+
+			break;
+
+
+
+
+
+		default:
+
+			break;
+
 		}
+
+
+
+
 
 	}
 
@@ -447,36 +521,67 @@ public:
 		else
 
 		{
+
 			//Ž€–S‚Þ[‚Ô
+
 			LoadDivGraph("Data/Image/player1.png", 18 * 6, 18, 6, PL_WIDTH, PL_HEIGHT, player_gh_parts);
-			DrawRectGraph(pos_x-EXPLOSION_MARGIN, pos_y-EXPLOSION_MARGIN, exp_x * 64, 0, 64, 64, exp_gh, true);
+
+			DrawRectGraph(pos_x - EXPLOSION_MARGIN, pos_y - EXPLOSION_MARGIN, exp_x * 64, 0, 64, 64, exp_gh, true);
+
 			expCnt++;
+
 			exp_x = expCnt / 3;
+
 			for (int i = 0; i < 9; i++)
+
 			{
+
 				switch (i % 2)
+
 				{
+
 				case 1:
+
 					parts_x[i] += expCnt / 20;
+
 					break;
+
 				case 0:
+
 					parts_x[i] -= expCnt / 20;
+
 					break;
+
 				}
+
 				if (expFlg[i] == false)
+
 				{
+
 					y_prev[i] = parts_y[i];
+
 					parts_y[i] = parts_y[i] - (rngvalue[i]);//EXPLOSIVE_POWER
+
 					expFlg[i] = true;
+
 				}
+
 				else
+
 				{
+
 					y_temp[i] = parts_y[i];
+
 					parts_y[i] += (parts_y[i] - y_prev[i]) + 0.35;
+
 					y_prev[i] = y_temp[i];
+
 				}
-				DrawRotaGraph(pos_x + parts_x[i], pos_y + parts_y[i],1,expCnt/3, player_gh_parts[PL_PARTS_START + i], true);
+
+				DrawRotaGraph(pos_x + parts_x[i], pos_y + parts_y[i], 1, expCnt / 3, player_gh_parts[PL_PARTS_START + i], true);
+
 			}
+
 		}
 
 	}

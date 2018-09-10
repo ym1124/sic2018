@@ -1,13 +1,10 @@
-#pragma once
 #define BLOCK_WIDTH 16
 
 #define BLOCK_HEIGHT 16
 
 
 
-#define BLOCK_RISE_MODE 0
-
-#define BLOCK_FALL_MODE 2
+#define BLOCK_SPEED 12
 
 
 
@@ -16,6 +13,8 @@ int getBlockRandPos_x();
 int getBlockRandValue();
 
 int getBlockNo(int, int);
+
+
 
 
 
@@ -53,24 +52,6 @@ public:
 
 
 
-	//struct blockExistFlg
-
-	//{
-
-	//	bool block1;
-
-	//	bool block2;
-
-	//	bool block3;
-
-	//	bool block4;
-
-	//	bool block5;
-
-	//	bool block6;
-
-	//};
-
 
 
 	bool blockExistFlg;
@@ -103,7 +84,7 @@ public:
 
 
 
-		speed = 12;
+		speed = BLOCK_SPEED;
 
 
 
@@ -253,6 +234,8 @@ public:
 
 
 
+
+
 	void View()
 
 	{
@@ -275,7 +258,7 @@ public:
 
 				{
 
-					DrawRectGraph(pos_x, (pos_y + i*height), 0, 0, PL_WIDTH, PL_HEIGHT, block_gh, true, false);
+					DrawRectGraph(pos_x, (pos_y + i*height), 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT, block_gh, true, false);
 
 				}
 
@@ -283,7 +266,7 @@ public:
 
 				{
 
-					DrawRectGraph(pos_x, (pos_y - i*height), 0, 0, PL_WIDTH, PL_HEIGHT, block_gh, true, false);
+					DrawRectGraph(pos_x, (pos_y - i*height), 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT, block_gh, true, false);
 
 				}
 
@@ -307,3 +290,6 @@ public:
 
 };
 
+
+
+void HitStop(block&, player&);

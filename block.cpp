@@ -2,6 +2,34 @@
 
 
 
+void HitStop(block &bl, player &pl)
+
+{
+
+	if (pl.hitstopCnt > 0)
+
+	{
+
+		bl.speed = 0;
+
+		pl.hitstopFlg = true;
+
+	}
+
+	else if (pl.hitstopFlg)
+
+	{
+
+		bl.speed = BLOCK_SPEED;
+
+		pl.hitstopFlg = false;
+
+	}
+
+}
+
+
+
 int getBlockRandPos_x()
 
 {
@@ -58,28 +86,25 @@ int getBlockNo(int first, int second)
 
 	case 9:
 
-		return 4;
-
-
-
 	case 10:
 
+		return 4;
+
 	case 11:
+
+	case 12:
 
 		return 5;
 
 
 
-	case 12:
-
-		return 6;
-
 
 
 	default:
 
-		return 6;
+		return 5;
 
 	}
 
 }
+
