@@ -139,7 +139,6 @@ void back::Drawback(scene se, player pl)
 
 
 void back::Drawbackfront(scene se, player pl)
-
 {
 
 	if (se.playmode == PLAY)//ƒvƒŒƒC‰æ–Ê”wŒi

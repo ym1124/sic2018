@@ -32,6 +32,11 @@ public:
 
 	int block_gh;
 
+	int blockef_gh;
+
+	int anim_x;
+	int animCnt;
+
 
 
 	bool block_break_Anm_Flg;
@@ -90,7 +95,7 @@ public:
 
 		block_gh = LoadGraph("Data/Image/chip1.png");
 
-
+		blockef_gh = LoadGraph("Data/Image/effect2.png");
 
 		block_break_Anm_Flg = false;
 
@@ -119,6 +124,9 @@ public:
 
 
 		blockFlg = false;
+
+		anim_x = 0;
+		animCnt = 0;
 
 	}
 
@@ -259,15 +267,72 @@ public:
 				{
 
 					DrawRectGraph(pos_x, (pos_y + i*height), 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT, block_gh, true, false);
+					if (speed == 0)
+					{
+						animCnt++;
+						anim_x = animCnt / 25 % 4;
+						switch (anim_x)
+						{
+						case 0:
+							DrawRectGraph(pos_x, (pos_y + i*height), anim_x * 32, 32, 32, 32, blockef_gh, true, false);
+							break;
+						case 1:
+							for (int i = anim_x; i >= 0; i--)
+							{
+								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+							}
+							break;
+						case 2:
+							for (int i = anim_x; i >= 0; i--)
+							{
+								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+							}
+							break;
+						case 3:
+							for (int i = anim_x; i >= 0; i--)
+							{
+								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+							}
+							break;//breakñ≥ÇµèÊéZÇ≈ï\é¶?
+						}
+					}
 
 				}
 
 				else if (directionMode == BLOCK_FALL_MODE)	//è„Ç©ÇÁâ∫Ç÷
 
 				{
-
+					//ï`âÊÇ®Ç©ÇµÇ¢Å@pos_yÇ™ïœÅH
 					DrawRectGraph(pos_x, (pos_y - i*height), 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT, block_gh, true, false);
-
+					if (speed == 0)
+					{
+						animCnt++;
+						anim_x = animCnt / 25 % 4;
+						switch (anim_x)
+						{
+						case 0:
+							DrawRectGraph(pos_x, (pos_y + i*height), anim_x * 32, 32, 32, 32, blockef_gh, true, false);
+							break;
+						case 1:
+							for (int i = anim_x; i >= 0; i--)
+							{
+								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+							}
+							break;
+						case 2:
+							for (int i = anim_x; i >= 0; i--)
+							{
+								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+							}
+							break;
+						case 3:
+							for (int i = anim_x; i >= 0; i--)
+							{
+								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+							}
+							break;//breakñ≥ÇµèÊéZÇ≈ï\é¶?
+						}
+					}
 				}
 
 			}
