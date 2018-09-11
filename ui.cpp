@@ -98,6 +98,11 @@ void ui::Draw(player pl)
 				break;
 			}
 		}
+		if (pl.directionMode == 1 || pl.directionMode == 3)
+		{
+			DrawGraph(0, 0, ui_gh2, true);
+			/*DrawRectGraph(0, 254, 0, 110, 112, 34, ui_gh, true);*/ //仮想ゲージ表示しない
+		}
 	}
 }
 
