@@ -1,6 +1,6 @@
 #include "all.h"
 
-void ui::Draw(player pl)
+void ui::Drawacc(player pl)
 {
 	preaccelaration = pl.acceleration - 1;
 	if (pl.hp > 0)
@@ -113,5 +113,5 @@ void ui::Move()
 
 void ui::All(player pl)
 {
-	Draw(pl);
+	Drawacc(pl);
 }

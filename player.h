@@ -524,6 +524,7 @@ public:
 
 			//éÄñSÇﬁÅ[Ç‘
 
+
 			LoadDivGraph("Data/Image/player1.png", 18 * 6, 18, 6, PL_WIDTH, PL_HEIGHT, player_gh_parts);
 
 			DrawRectGraph(pos_x - EXPLOSION_MARGIN, pos_y - EXPLOSION_MARGIN, exp_x * 64, 0, 64, 64, exp_gh, true);
@@ -588,11 +589,11 @@ public:
 
 
 
-	void Accele()
+	void Accele(scene se)
 
 	{
 
-		if (acceleration < PL_MAX_ACCELERATION)
+		if (acceleration < PL_MAX_ACCELERATION&&se.playmode==PLAY)
 
 		{
 
@@ -642,7 +643,7 @@ public:
 
 
 
-	void All()
+	void All(scene se)
 
 	{
 
@@ -650,7 +651,7 @@ public:
 
 		View();
 
-		Accele();
+		Accele(se);
 
 	}
 

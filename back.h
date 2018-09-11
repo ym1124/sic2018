@@ -41,7 +41,7 @@ public:
 
 	int door_gh;
 
-
+	int temp_y,temp_x,temp_fy,temp_fx;
 
 	int anim_x;
 
@@ -64,6 +64,11 @@ public:
 		y = 0;
 
 		fy = 0;
+
+		temp_y = 0;
+		temp_x = 0;
+		temp_fy = 0;
+		temp_fx = 0;
 
 		scrollspeedsetter = 0;
 

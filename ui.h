@@ -28,7 +28,7 @@ public:
 		ui_anim_gh = LoadGraph("Data/Image/UI_gravity_gauge.png");
 		ui_anim_gh2 = LoadGraph("Data/Image/UI_gravity_graph.png");
 	}
-	void Draw(player);
+	void Drawacc(player);
 	void Move();
 	void All(player);
 };

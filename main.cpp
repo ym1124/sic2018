@@ -85,8 +85,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (ProcessMessage() != -1)
 
 	{
-		se->playmode = PLAY;
-
 		//キー状態更新 //KB = キーボード //JOY = ジョイパッド //[]に指定のキーの定数を入れて使う
 
 		gpUpdateKey();
@@ -238,13 +236,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 
-
+		///モード転換
 		if (se->playmode == TITLE&&pl->pos_x >= 400)
 
 		{
-
+			
 			doplaymode(se);
 
+		}
+
+		if (se->playmode == TITLE)
+		{
+			bk->All(*se, *pl);
+			pl->All(*se);
 		}
 
 
@@ -252,17 +256,34 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		if (se->playmode == PLAY)
 
 		{
-
-			pl->All();
-
 			bk->All(*se, *pl);
 
 			pui->All(*pl);
 
+			pl->All(*se);
+
+			bk->Drawbackfront(*se, *pl);
+
+			if (pl->hp <= 0)
+			{
+				doovermode(se);
+			}
+
 		}
 
+		if (se->playmode==OVER)
+		{
+			bk->All(*se, *pl);
 
+			pui->All(*pl);
 
+			pl->All(*se);
+
+			bk->Drawbackfront(*se, *pl);
+
+			se->Overmode(se);
+
+		}
 
 
 
@@ -271,7 +292,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		//まだループしてないのでループさせる
 
-		bk->All(*se, *pl);
+		/*bk->All(*se, *pl);*/
 
 
 
@@ -280,14 +301,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 		pl->hitstopCnt--;
-
-
-
-
-
-		printfDx("%d", pl->acceleration);
-
-
 
 		if (CheckHitKey(KEY_INPUT_ESCAPE) == 1)
 
@@ -692,12 +705,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 
-
-
-
-		pl->All();
-
-		bk->Drawbackfront(*se, *pl);
 
 
 

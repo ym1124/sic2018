@@ -26,10 +26,11 @@ void back::Drawback(scene se, player pl)
 
 
 
-	if (se.playmode == PLAY)//ƒvƒŒƒC‰æ–Ê”wŒi
+	if (se.playmode == PLAY||se.playmode==OVER)//ƒvƒŒƒC‰æ–Ê”wŒi
 
 	{
-
+		if (se.playmode == OVER)y = temp_y;
+		if (se.playmode == OVER)x = temp_x;
 		switch (pl.directionMode)
 
 		{
@@ -131,7 +132,8 @@ void back::Drawback(scene se, player pl)
 			break;
 
 		}
-
+		if(se.playmode == PLAY)temp_y = y;//€–S“_‚Å‰æ–Ê~‚ß‚éicj
+		if (se.playmode == PLAY)temp_x = x;
 	}
 
 }
@@ -141,10 +143,9 @@ void back::Drawback(scene se, player pl)
 void back::Drawbackfront(scene se, player pl)
 {
 
-	if (se.playmode == PLAY)//ƒvƒŒƒC‰æ–Ê”wŒi
-
+	if (se.playmode == PLAY||se.playmode==OVER)//ƒvƒŒƒC‰æ–Ê”wŒi
 	{
-
+		if (se.playmode == OVER)fx=temp_fx;
 		switch (pl.directionMode)
 
 		{
@@ -241,7 +242,7 @@ void back::Drawbackfront(scene se, player pl)
 			break;
 
 		}
-
+		if (se.playmode == PLAY)temp_x = x;
 	}
 
 }
