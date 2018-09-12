@@ -10,8 +10,11 @@ public:
 	int overselect;
 	int timer;
 	bool retryFlg;
+	bool titleFlg;
 	scene()
 	{
+		retryFlg = false;
+		titleFlg = false;//’Ç‰Á
 		timer = 0;
 		playmode = TITLE;
 		overselect = 0;

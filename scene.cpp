@@ -53,7 +53,7 @@ void scene::Overselect(scene *se)
 	if (overselect == 1 && CheckHitKey(KEY_INPUT_RETURN))
 	{
 		overselect = 0;
-		dotitlemode(se);
+		titleFlg = true;//’Ç‰Á
 	}
 	if (overselect == 2 && CheckHitKey(KEY_INPUT_RETURN))
 	{

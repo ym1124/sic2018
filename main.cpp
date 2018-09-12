@@ -375,8 +375,44 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			}
 
+			if (se->titleFlg == true)//’Ç‰Á
+			{
+				pl->hp = 3;
 
+				for (int i = 0; i < 9; i++)
 
+				{
+
+					pl->parts_x[i] = 0;
+
+					pl->parts_y[i] = 0;
+
+					pl->y_prev[i] = 0;
+
+					pl->expFlg[i] = false;
+
+				}
+
+				pl->directionMode = 0;
+
+				pl->expCnt = 0;
+
+				bl->blockFlg = false;
+
+				ob->obstacleFlg = false;
+
+				se->overselect = 0;
+
+				dotitlemode(se);
+
+				se->titleFlg = false;
+
+				bl->blockSpawnCnt = -150;
+
+				bl->GetPos();
+
+				ob->obstacleSpawnCnt = -120;
+			}
 		}
 
 
