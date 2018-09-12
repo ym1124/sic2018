@@ -4,7 +4,11 @@
 
 
 
-#define BLOCK_SPEED 12
+#define BLOCK_SPEED 6
+
+
+
+#define BLOCK_SPAWN_LIMIT 120
 
 
 
@@ -13,6 +17,10 @@ int getBlockRandPos_x();
 int getBlockRandValue();
 
 int getBlockNo(int, int);
+
+int getBlockSpawnLimit(int, int, int, int);
+
+
 
 
 
@@ -34,9 +42,6 @@ public:
 
 	int blockef_gh;
 
-	int anim_x;
-	int animCnt;
-
 
 
 	bool block_break_Anm_Flg;
@@ -57,7 +62,15 @@ public:
 
 
 
+	int anim_x;
 
+	int animCnt;
+
+
+
+	int blockSpawnCnt;
+
+	int blockSpawnLimit;
 
 	bool blockExistFlg;
 
@@ -70,6 +83,12 @@ public:
 
 
 	bool blockFlg;
+
+
+
+
+
+	int first, second, third, fourth;
 
 
 
@@ -97,6 +116,8 @@ public:
 
 		blockef_gh = LoadGraph("Data/Image/effect2.png");
 
+
+
 		block_break_Anm_Flg = false;
 
 
@@ -115,9 +136,19 @@ public:
 
 
 
+		anim_x = 0;
+
+		animCnt = 0;
+
+
+
 		nextBlockMargin = 0;
 
 
+
+		blockSpawnCnt = -150;
+
+		blockSpawnLimit = getBlockSpawnLimit(first, second, third, fourth);
 
 		blockExistFlg = false;
 
@@ -125,8 +156,15 @@ public:
 
 		blockFlg = false;
 
-		anim_x = 0;
-		animCnt = 0;
+
+
+		first = 0;
+
+		second = 0;
+
+		third = 0;
+
+		fourth = 0;
 
 	}
 
@@ -136,9 +174,7 @@ public:
 
 	{
 
-		//pos_x = getBlockRandPos_x();
-
-		pos_x = WINDOW_X / 2;
+		pos_x = getBlockRandPos_x();
 
 
 
@@ -267,34 +303,63 @@ public:
 				{
 
 					DrawRectGraph(pos_x, (pos_y + i*height), 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT, block_gh, true, false);
+
 					if (speed == 0)
+
 					{
+
 						animCnt++;
+
 						anim_x = animCnt / 25 % 4;
+
 						switch (anim_x)
+
 						{
+
 						case 0:
+
 							DrawRectGraph(pos_x, (pos_y + i*height), anim_x * 32, 32, 32, 32, blockef_gh, true, false);
+
 							break;
+
 						case 1:
+
 							for (int i = anim_x; i >= 0; i--)
+
 							{
+
 								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+
 							}
+
 							break;
+
 						case 2:
+
 							for (int i = anim_x; i >= 0; i--)
+
 							{
+
 								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+
 							}
+
 							break;
+
 						case 3:
+
 							for (int i = anim_x; i >= 0; i--)
+
 							{
+
 								DrawRectGraph(pos_x, (pos_y + i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+
 							}
+
 							break;//breakñ≥ÇµèÊéZÇ≈ï\é¶?
+
 						}
+
 					}
 
 				}
@@ -302,37 +367,67 @@ public:
 				else if (directionMode == BLOCK_FALL_MODE)	//è„Ç©ÇÁâ∫Ç÷
 
 				{
-					//ï`âÊÇ®Ç©ÇµÇ¢Å@pos_yÇ™ïœÅH
+
 					DrawRectGraph(pos_x, (pos_y - i*height), 0, 0, BLOCK_WIDTH, BLOCK_HEIGHT, block_gh, true, false);
+
 					if (speed == 0)
+
 					{
+
 						animCnt++;
+
 						anim_x = animCnt / 25 % 4;
+
 						switch (anim_x)
+
 						{
+
 						case 0:
+
 							DrawRectGraph(pos_x, (pos_y - i*height), anim_x * 32, 32, 32, 32, blockef_gh, true, false);
+
 							break;
+
 						case 1:
+
 							for (int i = anim_x; i >= 0; i--)
+
 							{
+
 								DrawRectGraph(pos_x, (pos_y - i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+
 							}
+
 							break;
+
 						case 2:
+
 							for (int i = anim_x; i >= 0; i--)
+
 							{
+
 								DrawRectGraph(pos_x, (pos_y - i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+
 							}
+
 							break;
+
 						case 3:
+
 							for (int i = anim_x; i >= 0; i--)
+
 							{
+
 								DrawRectGraph(pos_x, (pos_y - i*height), (anim_x - i) * 32, 32, 32, 32, blockef_gh, true, false);
+
 							}
+
 							break;//breakñ≥ÇµèÊéZÇ≈ï\é¶?
+
 						}
+
 					}
+
 				}
 
 			}

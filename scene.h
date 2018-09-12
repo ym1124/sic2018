@@ -1,15 +1,18 @@
 #pragma once
 
-enum{TITLE,PLAY,CLEAR,OVER};
+enum { TITLE, PLAY, CLEAR, OVER };
 
 class scene
 {
 public:
 	int playmode;
-	int over_gh,over_gh_title,over_gh_retry;
+	int over_gh, over_gh_title, over_gh_retry;
 	int overselect;
+	int timer;
+	bool retryFlg;
 	scene()
 	{
+		timer = 0;
 		playmode = TITLE;
 		overselect = 0;
 		over_gh = LoadGraph("Data/Image/gameover_font.png");
@@ -21,7 +24,7 @@ public:
 	void Overselect(scene*);
 };
 
-void doplaymode(scene*);//modeïœçX
+void doplaymode(scene*);//mode
 void dotitlemode(scene*);
 void doclearmode(scene*);
 void doovermode(scene*);

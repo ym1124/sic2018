@@ -1,3 +1,4 @@
+
 #define PL_WIDTH 28
 
 #define PL_HEIGHT 28
@@ -50,7 +51,7 @@
 
 
 
-#define PL_HITSTOP_VAL 6
+#define PL_HITSTOP_VAL 12
 
 
 
@@ -59,6 +60,10 @@
 #define EXPLOSION_MARGIN 17
 
 #define PL_PARTS_START 63
+
+
+
+#define ACCELE_INC_TIME 60
 
 
 
@@ -74,13 +79,17 @@ bool check_hit_pos_x_goleft(int, int);
 
 bool checkHitBlock(int, int);
 
-bool checkHitObsacle(int, int);
+bool checkHitObstacle(int, int);
 
 int checkHitStop(int, int);
 
 int direction_pl_pos_x(int);
 
 int direction_pl_pos_y(int);
+
+float sign(float n);
+
+int getChangeDirectionModeLimit(int, int, int, int);
 
 
 
@@ -100,7 +109,8 @@ public:
 
 	int acceleration;
 
-
+	float targetSpeed;//かわもと
+	int direction;//かわもと
 
 	int accelerationTmp;
 
@@ -122,15 +132,35 @@ public:
 
 	bool damageFlg;
 
+	bool changeDirectionModeFlg;
+
+	bool changeDirectionStartFlg;
+
 
 
 	int directionMode;
+
+	int changeDirectionMode;
+
+	int changeDirectionModeCnt;
+
+	int changeDirectionModeLimit;
 
 	bool invincibleFlg;
 
 
 
+	int score;
+
+	int combo;
+
+	int combo_lim;
+
+
+
 	int player_gh;
+
+	int player_UP_gh;
 
 	int player_gh_death;
 
@@ -180,6 +210,10 @@ public:
 
 
 
+	int first, second, third, fourth;
+
+
+
 	player()
 
 	{
@@ -202,7 +236,8 @@ public:
 
 		acceleration = 1;
 
-
+		targetSpeed = 0;//かわもと
+		direction = 0;//かわもと
 
 		accelerationTmp = 1;
 
@@ -216,7 +251,37 @@ public:
 
 		damageFlg = false;
 
+		changeDirectionStartFlg = false;
+
+		changeDirectionModeFlg = false;
+
+
+
+		first = 0;
+
+		second = 0;
+
+		third = 0;
+
+		fourth = 0;
+
+
+
+		score = 0;
+
+		combo = 0;
+
+		combo_lim = COMBO_LIMIT;
+
+
+
 		directionMode = 0;
+
+		changeDirectionMode = 0;
+
+		changeDirectionModeCnt = 0;
+
+		changeDirectionModeLimit = getChangeDirectionModeLimit(first, second, third, fourth);
 
 		invincibleFlg = false;
 
@@ -241,6 +306,8 @@ public:
 
 
 		player_gh = LoadGraph("Data/Image/player1.png");
+
+		player_UP_gh = LoadGraph("Data/Image/player1_UP.png");
 
 		player_gh_death = LoadGraph("Data/Image/Pl_ps.png");
 
@@ -288,11 +355,15 @@ public:
 
 		case BLOCK_FALL_MODE:
 
-
+			targetSpeed = 0;//かわもと
 
 			if (CheckHitKey(KEY_INPUT_LEFT))
 
 			{
+				/*if (speed < PL_SPEED_MAX)//かわもとコメントアウト
+				{
+				speed += PL_SPEED_INC;
+				}*/
 
 				if (speed < PL_SPEED_MAX)
 
@@ -440,9 +511,45 @@ public:
 
 			case false:
 
-				if (acceleration == PL_MAX_ACCELERATION)
+				switch (directionMode)
 
 				{
+
+				case BLOCK_RISE_MODE:
+
+					if (acceleration == PL_MAX_ACCELERATION)
+
+					{
+
+						anim_x = (animCnt / 5) % 8;
+
+						anim_y = PL_HEIGHT;
+
+						animCnt++;
+
+						DrawRectGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, player_gh, true, false);
+
+					}
+
+					else
+
+					{
+
+						anim_x = (animCnt / 5) % 5;
+
+						anim_y = 0;
+
+						animCnt++;
+
+						DrawRectGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, player_gh, true, false);
+
+					}
+
+					break;
+
+
+
+				case PL_RIGHTSIDE_MODE:
 
 					anim_x = (animCnt / 5) % 8;
 
@@ -450,25 +557,65 @@ public:
 
 					animCnt++;
 
-					DrawRectGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, player_gh, true, false);
+					DrawRectRotaGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, 1, DX_PI*0.5, player_gh, true, false);
 
-				}
+					break;
 
-				else
 
-				{
 
-					anim_x = (animCnt / 5) % 5;
+				case BLOCK_FALL_MODE:
 
-					anim_y = 0;
+					if (acceleration == PL_MAX_ACCELERATION)
+
+					{
+
+						anim_x = (animCnt / 5) % 8;
+
+						anim_y = PL_HEIGHT;
+
+						animCnt++;
+
+						DrawRectGraph(pos_x, pos_y, 503 - PL_WIDTH - (anim_x*PL_WIDTH), 167 - PL_HEIGHT * 2, PL_WIDTH, PL_HEIGHT, player_UP_gh, true, false);
+
+					}
+
+					else
+
+					{
+
+						anim_x = (animCnt / 5) % 5;
+
+						anim_y = 0;
+
+						animCnt++;
+
+						DrawRectGraph(pos_x, pos_y, 503 - PL_WIDTH - (anim_x*PL_WIDTH), 167 - PL_HEIGHT, PL_WIDTH, PL_HEIGHT, player_UP_gh, true, false);
+
+					}
+
+					break;
+
+
+
+				case PL_LEFTSIDE_MODE:
+
+					anim_x = (animCnt / 5) % 8;
+
+					anim_y = PL_HEIGHT;
 
 					animCnt++;
 
-					DrawRectGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, player_gh, true, false);
+					DrawRectRotaGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, 1, DX_PI*1.5, player_gh, true, false);
+
+					break;
+
+
+
+				default:
+
+					break;
 
 				}
-
-
 
 				break;
 
@@ -486,7 +633,23 @@ public:
 
 					animCnt++;
 
-					DrawRectGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, player_gh, true, false);
+					switch (directionMode)
+					{
+					case BLOCK_RISE_MODE:
+						DrawRectGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, player_gh, true, false);
+						break;
+					case PL_RIGHTSIDE_MODE:
+						DrawRectRotaGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, 1, DX_PI*0.5, player_gh, true, false);
+						break;
+					case BLOCK_FALL_MODE:
+						DrawRectGraph(pos_x, pos_y, 503 - PL_WIDTH - (anim_x*PL_WIDTH), 167 - PL_HEIGHT * 2, PL_WIDTH, PL_HEIGHT, player_UP_gh, true, false);
+						break;
+					case PL_LEFTSIDE_MODE:
+						DrawRectRotaGraph(pos_x, pos_y, anim_x*PL_WIDTH, anim_y, PL_WIDTH, PL_HEIGHT, 1, DX_PI*1.5, player_gh, true, false);
+						break;
+					default:
+						break;
+					}
 
 					flashCnt++;
 
@@ -512,7 +675,7 @@ public:
 
 				}
 
-
+				break;
 
 			}
 
@@ -525,13 +688,18 @@ public:
 			//死亡むーぶ
 
 
+
 			LoadDivGraph("Data/Image/player1.png", 18 * 6, 18, 6, PL_WIDTH, PL_HEIGHT, player_gh_parts);
 
 			DrawRectGraph(pos_x - EXPLOSION_MARGIN, pos_y - EXPLOSION_MARGIN, exp_x * 64, 0, 64, 64, exp_gh, true);
 
+
+
 			expCnt++;
 
 			exp_x = expCnt / 3;
+
+
 
 			for (int i = 0; i < 9; i++)
 
@@ -547,6 +715,8 @@ public:
 
 					break;
 
+
+
 				case 0:
 
 					parts_x[i] -= expCnt / 20;
@@ -555,7 +725,11 @@ public:
 
 				}
 
+
+
 				if (expFlg[i] == false)
+
+
 
 				{
 
@@ -589,15 +763,25 @@ public:
 
 
 
+	void StopView()
+
+	{
+
+		DrawRectGraph(pos_x, pos_y, 0, 0, PL_WIDTH, PL_HEIGHT, player_gh, true, false);
+
+	}
+
+
+
 	void Accele(scene se)
 
 	{
 
-		if (acceleration < PL_MAX_ACCELERATION&&se.playmode==PLAY)
+		if (acceleration < PL_MAX_ACCELERATION && se.playmode == PLAY)
 
 		{
 
-			if (acceleCnt >= 120)
+			if (acceleCnt >= ACCELE_INC_TIME)
 
 			{
 
@@ -672,3 +856,5 @@ public:
 int direction_pl_pos_x(int);
 
 int direction_pl_pos_y(int);
+
+

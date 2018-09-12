@@ -41,7 +41,7 @@ void scene::Drawover()
 		break;
 	case 2://ƒŠƒgƒ‰ƒC‘I‘ð
 		DrawGraph(WINDOW_X*0.28, WINDOW_Y / 2 + 50, over_gh_title, true);
-		DrawExtendGraph(WINDOW_X*0.5, WINDOW_Y / 2 + 50,WINDOW_X*0.5+75,WINDOW_Y/2+80, over_gh_retry, true);
+		DrawExtendGraph(WINDOW_X*0.5, WINDOW_Y / 2 + 50, WINDOW_X*0.5 + 75, WINDOW_Y / 2 + 80, over_gh_retry, true);
 	}
 }
 
@@ -52,10 +52,12 @@ void scene::Overselect(scene *se)
 
 	if (overselect == 1 && CheckHitKey(KEY_INPUT_RETURN))
 	{
+		overselect = 0;
 		dotitlemode(se);
 	}
 	if (overselect == 2 && CheckHitKey(KEY_INPUT_RETURN))
 	{
-		doplaymode(se);
+		overselect = 0;
+		retryFlg = true;
 	}
 }
